@@ -1,0 +1,9 @@
+apiVersion: gadget.example.com/v1beta1
+kind: Solver
+metadata:
+  name: simple-solver
+  namespace: default
+spec:
+  environment:
+    image: helloworld:latest
+  retries: 2

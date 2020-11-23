@@ -1,0 +1,10 @@
+apiVersion: gadget.example.com/v1beta1
+kind: Case
+metadata:
+  name: simple-case
+  namespace: default
+spec:
+  resource: deployments/simple
+  type: log
+  trigger:
+    regexp: "*"
