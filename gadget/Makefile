@@ -8,3 +8,7 @@ docker-build:
 
 docker-push:
 	@docker push $(IMAGE):$(TAG)
+
+update-vendor:
+	@go mod tidy
+	@go mod vendor

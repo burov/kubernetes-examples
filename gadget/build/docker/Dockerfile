@@ -1,11 +1,7 @@
 FROM golang:1.15.5 AS builder
 
+# Switch to workdir
 WORKDIR /go/src/github.com/burov/kubernetes-examples/gadget/
-
-# Hack to cache dependencies
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
 
 # Copy source files
 COPY . .
