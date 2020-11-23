@@ -1,0 +1,68 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: solvers.gadget.example.com
+spec:
+  group: gadget.example.com
+  names:
+    kind: Solver
+    listKind: SolverList
+    plural: solvers
+    singular: solver
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: Case describes particular problem which happens with your application
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+                    of an object. Servers should convert recognized schemas to the latest
+                    internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+                  object represents. Servers may infer this from the endpoint the client
+                  submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          type: object
+          description: CaseSpec describe resource and trigger which case should
+          properties:
+            envionment:
+              type: object
+              description: Describes container specification which will be deployed as a Job to solve case
+              properties:
+                image:
+                  description: Docker image for container
+                  type: string
+                command:
+                  type: string
+                  description: Command which will be executed on cluster
+              required:
+              - image
+            retries:
+              type: number
+          required:
+          - environment
+        status:
+          description: SolverStatus describe status of CR
+          properties:
+            message:
+              type: string
+              description: Error message if state equals error
+            state:
+              description: Phase represent state of the case, synced or error
+              type: string
+          required:
+            - message
+            - state
+          type: object
+  version: v1beta1
+  versions:
+    - name: v1beta1
+      served: true
+      storage: true
